@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("EZAccess.SourceGenerator")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+06afa59f2c9767568d84c4a619ab213e5b30940b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+44830e705bea3678316c5b3beb79b41e1e2b301b")]
 [assembly: System.Reflection.AssemblyProductAttribute("EZAccess.SourceGenerator")]
 [assembly: System.Reflection.AssemblyTitleAttribute("EZAccess.SourceGenerator")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
