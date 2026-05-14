@@ -4,7 +4,7 @@ using Microsoft.CodeAnalysis;
 using Newtonsoft.Json;
 using System;
 
-namespace CodeGenerator;
+namespace EZAccess.SourceGenerator.Generators;
 
 [Generator]
 public class DatabaseDefReader : IIncrementalGenerator

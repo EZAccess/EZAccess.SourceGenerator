@@ -16,10 +16,6 @@
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.4" PrivateAssets="all" GeneratePathProperty="true" />
 	</ItemGroup>
 
-	<ItemGroup>
-		<Folder Include="Generators\" />
-	</ItemGroup>
-
 	<PropertyGroup>
 		<GetTargetPathDependsOn>$(GetTargetPathDependsOn);IncludeAnalyzerDependencies</GetTargetPathDependsOn>
 	</PropertyGroup>
