@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "/zHKe0Ac/7M=",
+  "success": true,
+  "projectFilePath": "C:\\Data\\Projecten\\EZAccess\\EZDataDefinition\\EZAccess.SourceGenerator\\EZAccess.SourceGenerator.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\GideonterMaat\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "C:\\Users\\GideonterMaat\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}
