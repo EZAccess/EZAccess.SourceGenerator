@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Data\\Projecten\\EZAccess\\EZDataDefinition\\EZAccess.SourceGenerator\\EZAccess.SourceGenerator.csproj": {}
+    "C:\\Data\\Projecten\\EZAccess\\EZDataDefinition\\EZAccess.SourceGenerator.Abstractions\\EZAccess.SourceGenerator.Abstractions.csproj": {}
   },
   "projects": {
-    "C:\\Data\\Projecten\\EZAccess\\EZDataDefinition\\EZAccess.SourceGenerator\\EZAccess.SourceGenerator.csproj": {
+    "C:\\Data\\Projecten\\EZAccess\\EZDataDefinition\\EZAccess.SourceGenerator.Abstractions\\EZAccess.SourceGenerator.Abstractions.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Data\\Projecten\\EZAccess\\EZDataDefinition\\EZAccess.SourceGenerator\\EZAccess.SourceGenerator.csproj",
-        "projectName": "EZAccess.SourceGenerator",
-        "projectPath": "C:\\Data\\Projecten\\EZAccess\\EZDataDefinition\\EZAccess.SourceGenerator\\EZAccess.SourceGenerator.csproj",
+        "projectUniqueName": "C:\\Data\\Projecten\\EZAccess\\EZDataDefinition\\EZAccess.SourceGenerator.Abstractions\\EZAccess.SourceGenerator.Abstractions.csproj",
+        "projectName": "EZAccess.SourceGenerator.Abstractions",
+        "projectPath": "C:\\Data\\Projecten\\EZAccess\\EZDataDefinition\\EZAccess.SourceGenerator.Abstractions\\EZAccess.SourceGenerator.Abstractions.csproj",
         "packagesPath": "C:\\Users\\GideonterMaat\\.nuget\\packages\\",
-        "outputPath": "C:\\Data\\Projecten\\EZAccess\\EZDataDefinition\\EZAccess.SourceGenerator\\obj\\",
+        "outputPath": "C:\\Data\\Projecten\\EZAccess\\EZDataDefinition\\EZAccess.SourceGenerator.Abstractions\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -53,27 +53,11 @@
           "framework": "netstandard2.0",
           "targetAlias": "netstandard2.0",
           "dependencies": {
-            "Microsoft.CodeAnalysis.Analyzers": {
-              "suppressParent": "All",
-              "target": "Package",
-              "version": "[5.3.0, )"
-            },
-            "Microsoft.CodeAnalysis.CSharp": {
-              "suppressParent": "All",
-              "target": "Package",
-              "version": "[5.3.0, )"
-            },
             "NETStandard.Library": {
               "suppressParent": "All",
               "target": "Package",
               "version": "[2.0.3, )",
               "autoReferenced": true
-            },
-            "Newtonsoft.Json": {
-              "suppressParent": "All",
-              "target": "Package",
-              "version": "[13.0.4, )",
-              "generatePathProperty": true
             }
           },
           "imports": [
