@@ -1,21 +1,26 @@
-﻿using CodeGenerator.DatabaseDefinition;
+﻿using EZAccess.SourceGenerator.DatabaseDefinition;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace CodeGenerator.Builders;
+namespace EZAccess.SourceGenerator.Builders;
 
 internal class DataServicesExtensionsBuilder : CodeBuilderBase
 {
-	private readonly IEnumerable<TableDef> _tables;
-	private readonly IEnumerable<ViewDef> _views;
+	private readonly List<TableDef> _tables;
+	private readonly List<ViewDef> _views;
+	protected readonly string _namespaceName;
 
-	public DataServicesExtensionsBuilder(IEnumerable<TableDef> tables, IEnumerable<ViewDef>? views, string namespaceName) : base(namespaceName)
+	public DataServicesExtensionsBuilder(List<TableDef> tables, List<ViewDef>? views, string namespaceName) 
 	{
 		_tables = tables;
 		_views = views ?? [];
+		_namespaceName = namespaceName;
 	}
 
-	internal string Build()
+	internal static string Build(List<TableDef> tables, List<ViewDef>? views, string namespaceName)
+		=> new DataServicesExtensionsBuilder(tables, views, namespaceName).BuildInternal();
+
+	private string BuildInternal()
 	{
 		WriteDisclaimer();
 		AppendLine("using Microsoft.Extensions.DependencyInjection;");
@@ -29,7 +34,10 @@ internal class DataServicesExtensionsBuilder : CodeBuilderBase
 			StartBlock("public static void AddEZGeneratedDataServices(this IServiceCollection services)");
 			{
 				WriteComment("Add services for tables. Those are writable");
-				var clientSideTables = _tables.Where(t => !t.AccessTableOnly && !string.IsNullOrEmpty(t.EntityNameSingular)).OrderBy(t => t.EntityNameSingular);
+				var clientSideTables = _tables
+					.Where(t => !t.AccessTableOnly && !string.IsNullOrEmpty(t.EntityNameSingular))
+					.OrderBy(t => t.EntityNameSingular)
+					.ToList();
 				foreach (var table in clientSideTables) {
 					AppendLine($"services.AddScoped<I{table.EntityNameSingular}Service, {table.EntityNameSingular}Service>();");
 				}
@@ -37,7 +45,10 @@ internal class DataServicesExtensionsBuilder : CodeBuilderBase
 				if (_views.Any()) {
 					BreakLine();
 					WriteComment("Add services for views. Those are readonly");
-					var clientSideViews = _views.Where(v => !v.AccessViewOnly && !string.IsNullOrEmpty(v.EntityNameSingular)).OrderBy(v => v.EntityNameSingular);
+					var clientSideViews = _views
+						.Where(v => !v.AccessViewOnly && !string.IsNullOrEmpty(v.EntityNameSingular))
+						.OrderBy(v => v.EntityNameSingular)
+						.ToList();
 					foreach (var view in clientSideViews) { 
 						AppendLine($"services.AddScoped<I{view.EntityNameSingular}Service, {view.EntityNameSingular}Service>();");
 					}

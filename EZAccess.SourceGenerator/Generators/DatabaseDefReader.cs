@@ -1,8 +1,9 @@
-﻿using CodeGenerator.Builders;
-using CodeGenerator.DatabaseDefinition;
+﻿using EZAccess.SourceGenerator.Builders;
+using EZAccess.SourceGenerator.DatabaseDefinition;
 using Microsoft.CodeAnalysis;
 using Newtonsoft.Json;
 using System;
+using System.Linq;
 
 namespace EZAccess.SourceGenerator.Generators;
 
@@ -44,14 +45,43 @@ public class DatabaseDefReader : IIncrementalGenerator
 		isEnabledByDefault: true
 		);
 
+	private static readonly DiagnosticDescriptor _generatorError = new(
+		id: "EZ005",
+		title: "Generator error",
+		messageFormat: "Error generating source: {0}",
+		category: "CodeGenerator",
+		DiagnosticSeverity.Error,
+		isEnabledByDefault: true);
+
+	private class GeneratorSettings
+	{
+		public bool GenerateDataServicesForBFF { get; }
+		public bool GenerateModels { get; }
+
+		public GeneratorSettings(bool generateDataServicesForBFF, bool generateModels)
+		{
+			GenerateDataServicesForBFF = generateDataServicesForBFF;
+			GenerateModels = generateModels;
+		}
+	}
+
 	public void Initialize(IncrementalGeneratorInitializationContext context)
 	{
+
 		// Read MSBuild properties
 		var generateDataServices = context.AnalyzerConfigOptionsProvider
 			.Select((provider, _) => {
 				provider.GlobalOptions.TryGetValue("build_property.GenerateDataServicesForBFF", out var value);
-				return value?.Equals("true", StringComparison.OrdinalIgnoreCase) ?? false;
+				provider.GlobalOptions.TryGetValue("build_property.GenerateModels", out var generateModels);
+				
+				return new GeneratorSettings(
+					generateDataServicesForBFF: value?.Equals("true", StringComparison.OrdinalIgnoreCase) ?? false,
+					generateModels: generateModels?.Equals("true", StringComparison.OrdinalIgnoreCase) ?? false
+				);
 			});
+
+		var assemblyName = context.CompilationProvider
+			.Select((compilation, _) => compilation.AssemblyName);
 
 		// Read the DatabaseDef.json file(s) from AdditionalFiles, filter for those that end with "DatabaseDef.json", and combine with the compilation
 		var databaseDefFiles = context.AdditionalTextsProvider
@@ -59,28 +89,16 @@ public class DatabaseDefReader : IIncrementalGenerator
 			.Select((file, ct) => (Text: file.GetText(ct)?.ToString(), file.Path));
 
 		// Combine the compilation and the DatabaseDef.json files into a single source output
-		var combined = 
-			context.CompilationProvider
+		var combined =
+			assemblyName
 			.Combine(databaseDefFiles.Collect())
 			.Combine(generateDataServices);
 
 		// Register a source output that processes the combined compilation and DatabaseDef.json files
 		context.RegisterSourceOutput(combined, (spc, source) => {
-			var compilation = source.Left.Left;
+			var assemblyName = source.Left.Left;
 			var files = source.Left.Right;
-			var shouldGenerate = source.Right;
-
-			//// Debug diagnostic to see what's happening
-			//var debugDiagnostic = new DiagnosticDescriptor(
-			//	id: "EZ999",
-			//	title: "Generator Debug Info",
-			//	messageFormat: "GenerateDataServicesForBFF={0}, ShouldGenerate={1}",
-			//	category: "CodeGenerator",
-			//	DiagnosticSeverity.Info,
-			//	isEnabledByDefault: true);
-			//spc.ReportDiagnostic(Diagnostic.Create(debugDiagnostic, Location.None, shouldGenerate, shouldGenerate));
-
-			if (!shouldGenerate) return; // If the user has not opted in to generating data services, we can skip processing entirely
+			var settings = source.Right;
 
 			if (files.Length == 0) return; // No DatabaseDef.json file found, so we can skip processing
 			var (Text, Path) = files[0]; // We only process the first DatabaseDef.json file found, ignoring any others
@@ -121,11 +139,24 @@ public class DatabaseDefReader : IIncrementalGenerator
 				return;
 			}
 
-			var rootNamespace = compilation.AssemblyName ?? "Generated";
+			var rootNamespace = assemblyName ?? "Generated";
 
-			var dataServicesExtensions = 
-				new DataServicesExtensionsBuilder(databaseDef.Tables, databaseDef.Views, rootNamespace);
-			spc.AddSource("DataServicesExtensions.g.cs", dataServicesExtensions.Build());
+			try {
+				// Generate Services for BFF if the setting is enabled. This includes a DataServicesExtensions class and individual service classes for each table that is not marked as AccessTableOnly.
+				if (settings.GenerateDataServicesForBFF) {
+					spc.AddSource("DataServicesExtensions.g.cs", DataServicesExtensionsBuilder.Build(databaseDef.Tables, databaseDef.Views, rootNamespace));
+
+					var tables = databaseDef.Tables.Where(t => !t.AccessTableOnly).ToList();
+
+					foreach (var table in tables) {
+						var code = BFFServiceClassBuilder.Build(table, rootNamespace);
+						spc.AddSource($"{table.EntityNameSingular}Service2.g.cs", code);
+					}
+				}
+			}
+			catch (Exception ex) {
+				spc.ReportDiagnostic(Diagnostic.Create(_generatorError, Location.None, ex.Message));
+			}
 		});
 	}
 }

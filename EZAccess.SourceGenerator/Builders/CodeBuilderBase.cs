@@ -1,18 +1,12 @@
 ﻿using System;
 using System.Text;
 
-namespace CodeGenerator.Builders;
+namespace EZAccess.SourceGenerator.Builders;
 
 internal abstract class CodeBuilderBase
 {
 	protected StringBuilder builder = new();
 	protected int indentLevel = 0;
-	protected readonly string _namespaceName;
-
-	protected CodeBuilderBase(string namespaceName)
-	{
-		_namespaceName = namespaceName;
-	}
 
 	protected void Indent() => indentLevel++;
 	protected void Unindent() => indentLevel = Math.Max(0, indentLevel - 1);

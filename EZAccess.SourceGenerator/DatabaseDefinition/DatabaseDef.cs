@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace CodeGenerator.DatabaseDefinition;
+namespace EZAccess.SourceGenerator.DatabaseDefinition;
 
 /// <summary>
 /// DatabaseDef is the main class in the database definition. All components inside the database

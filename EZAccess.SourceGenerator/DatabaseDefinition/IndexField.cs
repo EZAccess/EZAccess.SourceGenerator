@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CodeGenerator.DatabaseDefinition;
+namespace EZAccess.SourceGenerator.DatabaseDefinition;
 
 /// <summary>
 /// Model class for IndexField

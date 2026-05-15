@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("EZAccess.SourceGenerator.Abstractions")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+51da2907a9329773fd2aba7904cead471f6eeefb")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+be36bf9ad91ff4b5cc964113c08565cc33981a7e")]
 [assembly: System.Reflection.AssemblyProductAttribute("EZAccess.SourceGenerator.Abstractions")]
 [assembly: System.Reflection.AssemblyTitleAttribute("EZAccess.SourceGenerator.Abstractions")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

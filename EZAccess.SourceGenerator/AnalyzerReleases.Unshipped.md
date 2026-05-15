@@ -9,3 +9,4 @@ EZ001 | CodeGenerator | Error | Empty DatabaseDef.json file
 EZ002 | CodeGenerator | Error | invalid JSON in DatabaseDef.json
 EZ003 | CodeGenerator | Error | Missing required property
 EZ004 | CodeGenerator | Warning | Empty List
+EZ005 | CodeGenerator | Error | Generator error

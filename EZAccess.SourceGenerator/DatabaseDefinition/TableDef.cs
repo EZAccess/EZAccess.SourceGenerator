@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace CodeGenerator.DatabaseDefinition;
+namespace EZAccess.SourceGenerator.DatabaseDefinition;
 
 internal class TableDef : ICloneable
 {

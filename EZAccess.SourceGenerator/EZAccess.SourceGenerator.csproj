@@ -32,4 +32,8 @@
 		<None Include="AnalyzerReleases.Shipped.md" />
 		<None Include="AnalyzerReleases.Unshipped.md" />
 	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\EZAccess.SourceGenerator.Abstractions\EZAccess.SourceGenerator.Abstractions.csproj" />
+	</ItemGroup>
 </Project>

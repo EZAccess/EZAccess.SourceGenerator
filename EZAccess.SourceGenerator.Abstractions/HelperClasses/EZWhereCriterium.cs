@@ -503,7 +503,7 @@ public struct EZWhereCriterium
 		_sqlExpression = sqlExpression;
 		SqlOperator = sqlOperator;
 		if (value is not null) { 
-			Value = value.EzFormat("o", CultureInfo.InvariantCulture); 
+			Value = value.Value.ToString("o", CultureInfo.InvariantCulture); 
 		}
 		else {
 			if (sqlOperator == "=") SqlOperator = "IS";
@@ -613,13 +613,13 @@ public struct EZWhereCriterium
 	public readonly string GetSqlExpression(string? tableName)
 	{
 		// a predefined SQL expression always takes precedence
-		if (!string.IsNullOrEmpty(_sqlExpression)) return _sqlExpression; 
+		if (_sqlExpression is not null && !string.IsNullOrEmpty(_sqlExpression)) return _sqlExpression; 
 		// a fieldname with square brackets is asumed to be an alias
 		if (FieldName.StartsWith("[") && FieldName.EndsWith("]")) return FieldName;
 		// if a TableName is set, use it to prefix the fieldname
 		if (!string.IsNullOrEmpty(TableName)) return $"[{TableName}].[{FieldName}]";
 		// if a tableName is provided, use it to prefix the fieldname
-		if (!string.IsNullOrEmpty(tableName)) {
+		if (tableName is not null && !string.IsNullOrEmpty(tableName)) {
 			if (tableName.StartsWith("[") && tableName.EndsWith("]")) {
 				return $"{tableName}.[{FieldName}]";
 			}

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace CodeGenerator.DatabaseDefinition;
+namespace EZAccess.SourceGenerator.DatabaseDefinition;
 
 /// <summary>
 /// IndexDef is the class that defines an index in the database definition

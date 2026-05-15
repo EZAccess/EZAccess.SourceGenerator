@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CodeGenerator.DatabaseDefinition;
+namespace EZAccess.SourceGenerator.DatabaseDefinition;
 
 /// <summary>
 /// FieldDef is the class that defines a field in the database definition

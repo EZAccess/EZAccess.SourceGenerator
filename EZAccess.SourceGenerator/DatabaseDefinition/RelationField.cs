@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CodeGenerator.DatabaseDefinition;
+namespace EZAccess.SourceGenerator.DatabaseDefinition;
 
 /// <summary>
 /// Model of Field in a relation. Defining the relation between two fields in two tables.

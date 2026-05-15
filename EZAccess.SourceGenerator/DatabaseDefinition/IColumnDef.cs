@@ -1,4 +1,4 @@
-﻿namespace CodeGenerator.DatabaseDefinition;
+﻿namespace EZAccess.SourceGenerator.DatabaseDefinition;
 
 public interface IColumnDef
 {
