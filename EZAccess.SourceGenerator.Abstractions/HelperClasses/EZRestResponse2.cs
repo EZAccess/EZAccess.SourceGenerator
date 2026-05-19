@@ -3,7 +3,7 @@ using System.Net;
 
 namespace EZAccess.SourceGenerator.Abstractions.HelperClasses;
 
-public class EZRestResponse<TModel> 
+public class EZRestResponse2<TModel> 
 {
 	private string? _errorMessage;
 	private TModel _content;
@@ -30,13 +30,13 @@ public class EZRestResponse<TModel>
 		}
 	}
 
-	public EZRestResponse()
+	public EZRestResponse2()
 	{
 		_content = default!;
 		IsSuccess = false;
 	}
 
-	public EZRestResponse(TModel content)
+	public EZRestResponse2(TModel content)
 	{
 		_content = content;
 		IsSuccess = true;

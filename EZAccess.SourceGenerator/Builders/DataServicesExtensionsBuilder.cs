@@ -39,7 +39,7 @@ internal class DataServicesExtensionsBuilder : CodeBuilderBase
 					.OrderBy(t => t.EntityNameSingular)
 					.ToList();
 				foreach (var table in clientSideTables) {
-					AppendLine($"services.AddScoped<I{table.EntityNameSingular}Service, {table.EntityNameSingular}Service>();");
+					AppendLine($"services.AddScoped<I{table.EntityNameSingular}Service2, {table.EntityNameSingular}Service2>();");
 				}
 
 				if (_views.Any()) {
@@ -50,7 +50,7 @@ internal class DataServicesExtensionsBuilder : CodeBuilderBase
 						.OrderBy(v => v.EntityNameSingular)
 						.ToList();
 					foreach (var view in clientSideViews) { 
-						AppendLine($"services.AddScoped<I{view.EntityNameSingular}Service, {view.EntityNameSingular}Service>();");
+						AppendLine($"services.AddScoped<I{view.EntityNameSingular}Service2, {view.EntityNameSingular}Service2>();");
 					}
 				}
 			}

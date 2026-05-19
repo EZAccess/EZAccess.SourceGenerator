@@ -152,6 +152,13 @@ public class DatabaseDefReader : IIncrementalGenerator
 						var code = BFFServiceClassBuilder.Build(table, rootNamespace);
 						spc.AddSource($"{table.EntityNameSingular}Service2.g.cs", code);
 					}
+
+					var views = databaseDef.Views.Where(t => !t.AccessViewOnly).ToList();
+
+					foreach (var view in views) {
+						var code = BFFServiceROClassBuilder.Build(view, rootNamespace);
+						spc.AddSource($"{view.EntityNameSingular}Service2.g.cs", code);
+					}
 				}
 			}
 			catch (Exception ex) {

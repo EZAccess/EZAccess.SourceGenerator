@@ -23,31 +23,31 @@ public abstract class EZHttpService<Tclass> where Tclass : class
 		_logger = logger;
 	}
 
-	async protected Task<EZRestResponse<T>> HttpGetAsync<T>(string requestUri)
+	async protected Task<EZRestResponse2<T>> HttpGetAsync<T>(string requestUri)
 	{
 		_logger.LogInformation("Requesting data from server: {requestUri}", requestUri);
 		return await HttpRequestAsync<T>(httpClient.GetAsync(requestUri), requestUri, _logger);
 	}
 
-	async protected Task<EZRestResponse<T>> HttpGetAsync<T>(string requestUri, CancellationToken cancellationToken)
+	async protected Task<EZRestResponse2<T>> HttpGetAsync<T>(string requestUri, CancellationToken cancellationToken)
 	{
 		_logger.LogInformation("Requesting data from server: {requestUri}", requestUri);
 		return await HttpRequestAsync<T>(httpClient.GetAsync(requestUri, cancellationToken), requestUri, _logger);
 	}
 
-	async protected Task<EZRestResponse<T>> HttpPostAsync<T>(string requestUri, T newT)
+	async protected Task<EZRestResponse2<T>> HttpPostAsync<T>(string requestUri, T newT)
 	{
 		_logger.LogInformation("Posting data to server: {requestUri}", requestUri);
 		return await HttpRequestAsync<T>(httpClient.PostAsJsonAsync(requestUri, newT), requestUri, _logger);
 	}
 
-	async protected Task<EZRestResponse<TResponse>> HttpPostAsync<TResponse, TInput>(string requestUri, TInput newT)
+	async protected Task<EZRestResponse2<TResponse>> HttpPostAsync<TResponse, TInput>(string requestUri, TInput newT)
 	{
 		_logger.LogInformation("Posting data to server: {requestUri}", requestUri);
 		return await HttpRequestAsync<TResponse>(httpClient.PostAsJsonAsync(requestUri, newT), requestUri, _logger);
 	}
 
-	async protected Task<EZRestResponse<T>> HttpPostFileAsync<T>(string requestUri, Stream fileStream, string fileName, string? contentType = null)
+	async protected Task<EZRestResponse2<T>> HttpPostFileAsync<T>(string requestUri, Stream fileStream, string fileName, string? contentType = null)
 	{
 		_logger.LogInformation("Posting file to server: {requestUri}", requestUri);
 		try {
@@ -73,39 +73,39 @@ public abstract class EZHttpService<Tclass> where Tclass : class
 		}
 	}
 
-	async protected Task<EZRestResponse<Tresponse>> HttpActionAsync<Tresponse>(string requestUri, JsonElement request)
+	async protected Task<EZRestResponse2<Tresponse>> HttpActionAsync<Tresponse>(string requestUri, JsonElement request)
 	{
 		_logger.LogInformation("Posting data to server: {requestUri}", requestUri);
 		return await HttpRequestAsync<Tresponse>(httpClient.PostAsJsonAsync(requestUri, request), requestUri, _logger);
 	}
 
-	async protected Task<EZRestResponse<Tresponse>> HttpActionAsync<Tresponse>(string requestUri)
+	async protected Task<EZRestResponse2<Tresponse>> HttpActionAsync<Tresponse>(string requestUri)
 	{
 		_logger.LogInformation("Posting data to server: {requestUri}", requestUri);
 		return await HttpRequestAsync<Tresponse>(httpClient.PostAsJsonAsync(requestUri, string.Empty), requestUri, _logger);
 	}
 
-	async protected Task<EZRestResponse<T>> HttpPutAsync<T>(string requestUri, T updatedT)
+	async protected Task<EZRestResponse2<T>> HttpPutAsync<T>(string requestUri, T updatedT)
 	{
 		_logger.LogInformation("Updating data on server: {requestUri}", requestUri);
 		return await HttpRequestAsync<T>(httpClient.PutAsJsonAsync(requestUri, updatedT), requestUri, _logger);
 	}
 
-	async protected Task<EZRestResponse<TResponse>> HttpPutAsync<TResponse, TInput>(string requestUri, TInput updatedT)
+	async protected Task<EZRestResponse2<TResponse>> HttpPutAsync<TResponse, TInput>(string requestUri, TInput updatedT)
 	{
 		_logger.LogInformation("Updating data on server: {requestUri}", requestUri);
 		return await HttpRequestAsync<TResponse>(httpClient.PutAsJsonAsync(requestUri, updatedT), requestUri, _logger);
 	}
 
-	async protected Task<EZRestResponse<TResponse>> HttpDeleteAsync<TResponse>(string requestUri)
+	async protected Task<EZRestResponse2<TResponse>> HttpDeleteAsync<TResponse>(string requestUri)
 	{
 		_logger.LogInformation("Deleting data on server: {requestUri}", requestUri);
 		return await HttpRequestAsync<TResponse>(httpClient.DeleteAsync(requestUri), requestUri, _logger);
 	}
 
-	private static async Task<EZRestResponse<T>> HttpRequestAsync<T>(Task<HttpResponseMessage> httpRequest, string requestUri, ILogger logger)
+	private static async Task<EZRestResponse2<T>> HttpRequestAsync<T>(Task<HttpResponseMessage> httpRequest, string requestUri, ILogger logger)
 	{
-		var response = new EZRestResponse<T>();
+		var response = new EZRestResponse2<T>();
 		try
 		{
 			var result = await httpRequest;
